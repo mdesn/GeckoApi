@@ -1,7 +1,8 @@
-﻿using System;
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
 using System.Linq;
 using System.Net;
-using RestSharp;
 using TradeGeckoApi.Context;
 using TradeGeckoApi.Exceptions;
 using TradeGeckoApi.Model;
@@ -25,6 +26,12 @@ namespace TradeGeckoApi.Service
             _applicationId = applicationId;
             _secret = secret;
             _callbackUrl = callbackUrl;
+            _baseUrl = baseUrl;
+        }
+
+        public AuthenticationService(string accessToken, string baseUrl)
+        {
+            _accessToken = accessToken;
             _baseUrl = baseUrl;
         }
 
@@ -65,7 +72,7 @@ namespace TradeGeckoApi.Service
             var request = new RestRequest("/oauth/token", Method.POST);
             request.AddParameter("client_id", _applicationId, ParameterType.GetOrPost);
             request.AddParameter("client_secret", _secret, ParameterType.GetOrPost);
-            
+
             request.AddParameter("redirect_uri", _callbackUrl, ParameterType.GetOrPost);
             if (string.IsNullOrEmpty(_refreshToken))
             {

@@ -23,7 +23,7 @@ namespace TradeGeckoApi
         private Lazy<VariantResource> _varients;
         private Lazy<InvoiceResource> _invoices;
         private Lazy<InvoiceItemResource> _invoiceItems;
-        private Lazy<UserResource> _users; 
+        private Lazy<UserResource> _users;
 
         public GeckoClient(string applicationId, string secret, string callbackUrl, string url = null)
         {
@@ -38,6 +38,14 @@ namespace TradeGeckoApi
             _authenticationService = authenticationServiceService;
             _requestService = requestService;
             InitResources();
+        }
+
+        public GeckoClient(string accessToken, string url = null)
+        {
+            url = url ?? "https://api.tradegecko.com/";
+            this._authenticationService = new AuthenticationService(accessToken, url);
+            this._requestService = new RequestService(this._authenticationService, url);
+            this.InitResources();
         }
 
         private void InitResources()
@@ -62,7 +70,7 @@ namespace TradeGeckoApi
 
         public GeckoClient()
         {
-            //Used For Mocking Resouces
+            //Used For Mocking Resources
         }
 
         public virtual IAuthenticationService Authentication
