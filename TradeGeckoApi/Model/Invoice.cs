@@ -35,5 +35,9 @@ namespace TradeGeckoApi.Model
         public int[] InvoiceLineItemIds { get; set; }
         [JsonProperty("invoice_line_items")]
         public IList<InvoiceItem> InvoiceItems { get; set; }
+        [JsonProperty("document_url")]
+        public string DocumentUrl { get; set; }
+        [JsonProperty("cached_total")]
+        public string CachedTotal { get; set; }
     }
 }
